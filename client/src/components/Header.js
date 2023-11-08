@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { fetchUser } from '../store';
+import Button from './Button';
+import Skeleton from './Skeleton';
 import { useThunk } from '../hooks/use-thunk';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,42 +12,61 @@ function Header() {
 	const { user } = useSelector((state) => {
 		return state.auth;
 	});
+	const handleLogout = () => {
+		window.location.href = '/api/logout';
+	};
+	const handleLogin = () => {
+		window.location.href = '/auth/google';
+	};
 	useEffect(() => {
 		doFetchUser();
 	}, [doFetchUser]);
 
 	let content;
 	if (isLoadingUser) {
-		content = <div>Loading User...</div>;
+		content = (
+			<Skeleton
+				times={6}
+				className='h-10 w-full'
+			/>
+		);
 	} else if (loadingUserError) {
 		content = <div>Error fetching user...</div>;
 	}
 	if (user) {
 		content = (
-			<li key='1'>
-				<a href='/api/logout'>Logout</a>{' '}
-			</li>
+			<Button
+				className=' text-yellow-200 hover:cursor-pointer'
+				onClick={handleLogout}
+				loading={isLoadingUser}
+			>
+				Logout
+			</Button>
 		);
 	} else {
 		content = (
-			<li>
-				<a href='/auth/google'>Login With Google</a>
-			</li>
+			<Button
+				className=' text-yellow-200 hover:cursor-pointer'
+				onClick={handleLogin}
+				loading={isLoadingUser}
+			>
+				Login With Google
+			</Button>
 		);
 	}
-
 	return (
-		<nav>
-			<div className='nav-wrapper'>
-				<button
+		<div className='h-20 w-screen flex flex-row justify-between items-center  bg-blue-500'>
+			<div className='m-2'>
+				<Button
 					onClick={() => navigate(user ? '/display' : '/')}
-					className='left brand-logo'
+					loading={isLoadingUser}
+					className=' text-yellow-200 hover:cursor-pointer'
 				>
 					Car Data
-				</button>
-				<ul className='right'>{content}</ul>
+				</Button>
 			</div>
-		</nav>
+			<div className='m-3'>{content}</div>
+		</div>
 	);
 }
 

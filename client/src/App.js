@@ -1,14 +1,14 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import Header from './Header';
-import Landing from './Landing';
-import CarSafety from './CarSafety';
-import Cars from './Cars';
+import Header from './components/Header';
+import Landing from './components/Landing';
+import CarSafety from './components/CarSafety';
+import Cars from './components/Cars';
 
 function App() {
 	return (
-		<div className='container'>
+		<>
 			<Header />
 			<Routes>
 				<Route
@@ -24,7 +24,7 @@ function App() {
 					element={<Cars />}
 				/>
 			</Routes>
-		</div>
+		</>
 	);
 }
 

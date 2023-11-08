@@ -2,8 +2,11 @@ function CarDetails({ data }) {
 	console.log('car from CarDetails', data);
 
 	const renderedCars = data.map((car, index) => (
-		<div key={index}>
-			<h3>{car.carMakerName}</h3>
+		<div
+			key={index}
+			className='m-3 p-2'
+		>
+			<h3 className='text-2xl'>{car.carMakerName}</h3>
 			{car.models.map((model, modelIndex) => (
 				<div key={`model_${index}_${modelIndex}`}>
 					<h5>Model Name: {model.modelName}</h5>
@@ -20,6 +23,6 @@ function CarDetails({ data }) {
 		</div>
 	));
 
-	return <div>{renderedCars}</div>;
+	return <div className='m-3 border rounded'>{renderedCars}</div>;
 }
 export default CarDetails;
